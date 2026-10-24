@@ -1,0 +1,8 @@
+{
+  "name": "MR SMART FITNESS",
+  "description": "Holistic Islamic daily routine, 5 Waqt Namaz tracker, Nafs Control emergency guard, and gym workout fitness portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

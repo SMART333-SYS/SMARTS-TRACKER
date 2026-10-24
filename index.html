@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MR SMART FITNESS</title>
+    <meta name="description" content="Holistic Islamic daily routine, 5 Waqt Namaz tracker, Nafs Control emergency guard, and gym workout fitness portal." />
+    <meta property="og:title" content="MR SMART FITNESS" />
+    <meta property="og:description" content="Holistic Islamic daily routine, 5 Waqt Namaz tracker, Nafs Control emergency guard, and gym workout fitness portal." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- PWA Mobile & Standalone Meta Tags -->
+    <meta name="theme-color" content="#059669" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Samroot" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      (function() {
+        // 1. Suppress console.error/warn for Vite HMR WebSocket in preview iframe
+        var origConsoleError = console.error;
+        console.error = function() {
+          var text = Array.prototype.slice.call(arguments).map(function(arg) {
+            return String(arg && arg.message ? arg.message : arg);
+          }).join(' ');
+          if (text.indexOf('WebSocket') !== -1 || text.indexOf('vite-hmr') !== -1) {
+            return;
+          }
+          return origConsoleError.apply(console, arguments);
+        };
+
+        // 2. Intercept native WebSocket for 'vite-hmr' subprotocol
+        if (typeof window !== 'undefined' && window.WebSocket) {
+          var NativeWebSocket = window.WebSocket;
+          window.WebSocket = function(url, protocols) {
+            var isHmr = false;
+            if (protocols === 'vite-hmr') isHmr = true;
+            if (Array.isArray(protocols) && protocols.indexOf('vite-hmr') !== -1) isHmr = true;
+            if (typeof url === 'string' && (url.indexOf('vite-hmr') !== -1 || url.indexOf('@vite') !== -1)) isHmr = true;
+
+            if (isHmr) {
+              var listeners = { open: [], message: [], close: [], error: [] };
+              var dummy = {
+                readyState: 1, // OPEN
+                url: url,
+                protocol: 'vite-hmr',
+                send: function() {},
+                close: function() {},
+                addEventListener: function(evt, fn) {
+                  if (listeners[evt]) listeners[evt].push(fn);
+                  if (evt === 'open') {
+                    setTimeout(function() {
+                      try { fn({ type: 'open' }); } catch (e) {}
+                    }, 0);
+                  }
+                },
+                removeEventListener: function(evt, fn) {
+                  if (listeners[evt]) {
+                    listeners[evt] = listeners[evt].filter(function(cb) { return cb !== fn; });
+                  }
+                },
+                dispatchEvent: function() { return true; },
+                onopen: null,
+                onclose: null,
+                onerror: null,
+                onmessage: null
+              };
+              return dummy;
+            }
+            return new NativeWebSocket(url, protocols);
+          };
+          window.WebSocket.prototype = NativeWebSocket.prototype;
+        }
+
+        // 3. Catch window unhandled errors and rejections
+        window.addEventListener('unhandledrejection', function(e) {
+          var msg = String(e && e.reason && e.reason.message ? e.reason.message : e.reason);
+          if (msg.indexOf('WebSocket') !== -1) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        });
+        window.addEventListener('error', function(e) {
+          var msg = String(e && e.message ? e.message : '');
+          if (msg.indexOf('WebSocket') !== -1) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        });
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
